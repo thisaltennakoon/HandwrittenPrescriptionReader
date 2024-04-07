@@ -47,7 +47,7 @@ app.post('/runcmd', (req, res) => {
         console.log('outputData: ', outputData);
         var responseArray = outputData.split("##")
         console.log('responseArray: ', responseArray);
-        var resultArray = (responseArray[3]).split("||");
+        var resultArray = (responseArray[responseArray.length - 1]).split("||");
         console.log('resultArray: ', resultArray);
         const responseObj = { "name": (resultArray[0]).trim(), "accuracy": ((resultArray[1].replace('\r', '')).replace('\n', '')).trim() };
         res.send(responseObj);
