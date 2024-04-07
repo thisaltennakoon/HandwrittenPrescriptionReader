@@ -22,18 +22,20 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.post('/upload', upload.single('file'), (req, res) => {
+    console.log('Image uploaded successfully. File path: ', filePath);
     const filePath = req.file.path;
     res.json({ filepath: filePath });
 });
 
 app.post('/runcmd', (req, res) => {
     const { filePath } = req.body;
+    console.log('runcmd File path: ', filePath);
     if (!filePath) {
         return res.status(400).send('File path is required');
     }
     const pythonProcess = spawn('python', ['main_model.py', filePath]);
     let outputData = '';
-
+    console.log('Processing started File path: ', filePath);
     pythonProcess.stdout.on('data', (data) => {
         outputData = outputData + "##" + data.toString();
     });
@@ -42,8 +44,11 @@ app.post('/runcmd', (req, res) => {
     });
 
     pythonProcess.on('close', (code) => {
+        console.log('outputData: ', outputData);
         var responseArray = outputData.split("##")
+        console.log('responseArray: ', responseArray);
         var resultArray = (responseArray[3]).split("||");
+        console.log('resultArray: ', resultArray);
         const responseObj = { "name": (resultArray[0]).trim(), "accuracy": ((resultArray[1].replace('\r', '')).replace('\n', '')).trim() };
         res.send(responseObj);
     });
