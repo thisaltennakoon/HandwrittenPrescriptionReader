@@ -43,16 +43,9 @@ app.post('/runcmd', (req, res) => {
 
     pythonProcess.on('close', (code) => {
         var responseArray = outputData.split("##")
-        if (responseArray.length >= 4) {
-            var resultArray = responseArray[3].split("||");
-            const responseObj = {
-                "name": (resultArray[0] || '').trim(),
-                "accuracy": ((resultArray[1] || '').replace('\r', '').replace('\n', '') || '').trim()
-            };
-            res.send(responseObj);
-        } else {
-            res.status(500).send('Invalid response from Python script');
-        }
+        var resultArray = (responseArray[3]).split("||");
+        const responseObj = { "name": (resultArray[0]).trim(), "accuracy": ((resultArray[1].replace('\r', '')).replace('\n', '')).trim() };
+        res.send(responseObj);
     });
 });
 
