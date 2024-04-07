@@ -54,6 +54,14 @@ app.post('/runcmd', (req, res) => {
     });
 });
 
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Define a route to serve the HTML page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
