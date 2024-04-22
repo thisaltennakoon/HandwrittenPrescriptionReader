@@ -12,7 +12,7 @@ function analyze() {
     document.getElementById('configurator').classList.add("d-none");
     document.getElementById('configurator_load').classList.remove("d-none");
 
-    fetch('http://23.251.151.137:3000/upload', {
+    fetch('http://34.66.2.29:3000/upload', {
         method: 'POST',
         body: formData
     })
@@ -37,7 +37,7 @@ function predict_text(filePath) {
         filePath: filePath
     };
 
-    fetch('http://23.251.151.137:3000/runcmd', {
+    fetch('http://34.66.2.29:3000/runcmd', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ function predict_text(filePath) {
 
             document.getElementById('accuracy_r').innerHTML = ((data.accuracy) * 100) + "%";
             document.getElementById('name_r').innerHTML = data.name;
-            document.getElementById('image_r').src = "http://23.251.151.137:3000/" + filePath;
+            document.getElementById('image_r').src = "http://34.66.2.29:3000/" + filePath;
 
             console.log('Response received:', data);
         })
